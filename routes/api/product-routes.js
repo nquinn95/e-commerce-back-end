@@ -4,15 +4,48 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // The `/api/products` endpoint
 
 // get all products
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   // find all products
-  // be sure to include its associated Category and Tag data
+    try{
+      const productsData = await Product.findAll({
+        
+    //   // be sure to include its associated Category and Tag data
+        include: [{model: Category}],
+        include: [{model: Tag}]
+      });
+      //throws a 404 error if there is no data in categoriesData
+      if (!productsData){
+        res.status(404).json({message: 'But there was nothing there.'})
+      }
+      res.status(200).json(productsData);
+    } catch(err){
+      res.status(500).json(err);
+    }
+  
+
 });
 
 // get one product
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
+  try{
+    productsData = await Category.findByPk(req.params.id, {
+   // be sure to include its associated Category and Tag data
+      include: [{model: Tag}],
+      include: [{model: Category}]
+    })
+  
+    if (!productsData){
+      res.status(404).json({message: 'But there was nothing there.'})
+      return; 
+    } 
+    res.status(200).json(productsData);
+  } catch(err){
+    res.status(500).json(err);
+  }
+  
+    
+
 });
 
 // create new product
@@ -91,6 +124,19 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  try {
+    await Product.destroy({
+      where: {
+        id: req.params.id
+      }
+    }) .then(data => {
+      res.status(200).json('You have destroyed the data');
+    });
+  } catch(err){
+    res.status(500).json(err);
+  }
 });
+
+
 
 module.exports = router;
