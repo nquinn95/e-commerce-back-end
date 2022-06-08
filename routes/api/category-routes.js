@@ -9,11 +9,13 @@ router.get('/', async (req, res) => {
     const categoriesData = await Category.findAll({
       
   // be sure to include its associated Products
-      include: [{model: Product}],
+      include: [{
+        model: Product
+      }],
     });
     //throws a 404 error if there is no data in categoriesData
     if (!categoriesData){
-      res.status(404).json({message: 'But there was nothing there.'})
+      res.status(404).json( 'But there was nothing there.')
     }
     res.status(200).json(categoriesData);
   } catch(err){

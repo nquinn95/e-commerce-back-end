@@ -10,8 +10,10 @@ router.get('/', async (req, res) => {
       const productsData = await Product.findAll({
         
     //   // be sure to include its associated Category and Tag data
-        include: [{model: Category}],
-        include: [{model: Tag}]
+        include: [
+        {model: Category},
+        {model: Tag},
+      ]
       });
       //throws a 404 error if there is no data in categoriesData
       if (!productsData){
@@ -129,9 +131,9 @@ router.delete('/:id', async (req, res) => {
       where: {
         id: req.params.id
       }
-    }) .then(data => {
+    }) .then((data => {
       res.status(200).json('You have destroyed the data');
-    });
+    }));
   } catch(err){
     res.status(500).json(err);
   }
