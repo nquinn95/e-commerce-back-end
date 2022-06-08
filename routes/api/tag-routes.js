@@ -6,7 +6,7 @@ const { Tag, Product, ProductTag } = require('../../models');
 router.get('/', async(req, res) => {
   // find all tags
   try{
-    const tagsData = await Category.findAll({
+    const tagsData = await Tag.findAll({
       
   // be sure to include its associated Products
       include: [{model: Product}],
@@ -51,7 +51,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   // update a tag's name by its `id` value
   try{
     await Tag.update(

@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   try{
-    productsData = await Category.findByPk(req.params.id, {
+    productsData = await Product.findByPk(req.params.id, {
    // be sure to include its associated Category and Tag data
       include: [{model: Tag}],
       include: [{model: Category}]
