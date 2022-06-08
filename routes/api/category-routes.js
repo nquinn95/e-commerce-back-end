@@ -81,9 +81,9 @@ router.delete('/:id', (req, res) => {
       where: {
         id: req.params.id
       }
-    }) .then(data){
+    }) .then(data => {
       res.status(200).json('You have destroyed the data');
-    };
+    });
   } catch(err){
     res.status(500).json(err);
   }
